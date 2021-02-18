@@ -108,7 +108,7 @@ namespace Web.Areas.Customer.Controllers
             model.TotalPrice = 0;
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, CartName);
 
-            // get all of the data for display view and calculate the total price of the phone
+            // get all of the data for display view and calculate the total price of the article
             foreach (var item in cart)
             {
                 var artikal = ArtikliService.GetArtikal(item.Product.Id);
