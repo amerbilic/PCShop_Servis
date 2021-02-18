@@ -1,0 +1,92 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ }
+@model NarudzbaViewModel
+
+<link rel="stylesheet" href="/Customer/css/intlTelInput.css" />
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"> </th>
+                <th scope="col">Produkt</th>
+                <th scope="col">Dostupnost</th>
+                <th scope="col" class="text-center">Kolicina</th>
+                <th scope="col" class="text-right">Cijena</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Detalji.Items)
+            {
+<tr>
+    <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+    <td>@item.Product.artikal.Naziv</td>
+    <td>U skladistu: @item.Product.artikal.StanjeNaSkladistu</td>
+    <td class="text-right">@item.Quantity</td>
+    <td class="text-right">@item.Product.artikal.Cijena</td>
+    <td class="text-right"><a asp-area="Customer" asp-controller="Kosarica" asp-action="Brisi" asp-route-id="@item.Product.Id" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a> </td>
+</tr>            }
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><strong>Total</strong></td>
+                <td class="text-right"><strong>@Model.Detalji.TotalPrice KM</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<form asp-area="Customer" asp-controller="Narudzba" asp-action="Index" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="col-12">
+
+        <div class="col-12">
+            <label class="order-form-label">Hvala Vam na povjerenju! Molimo vas unesite podatke za dostavu</label>
+        </div>
+        <div class="form-group ">
+            <input asp-for="KontaktTelefon" class="form-control" placeholder="Telefon">
+            <span asp-validation-for="KontaktTelefon" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ">
+            <input asp-for="Ime" class="form-control" placeholder="Ime">
+            <span asp-validation-for="Ime" class="text-danger"></span>
+        </div>
+        <div class="form-group ">
+            <input asp-for="Prezime" class="form-control" placeholder="Prezime">
+            <span asp-validation-for="Prezime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ">
+            <input asp-for="Kanton" class="form-control" placeholder="Kanton">
+            <span asp-validation-for="Kanton" class="text-danger"></span>
+        </div>
+        <div class="form-group ">
+            <input asp-for="Opcina" class="form-control" placeholder="Opcina">
+            <span asp-validation-for="Opcina" class="text-danger"></span>
+        </div>
+        <div class="form-group ">
+            <input asp-for="Ulica" class="form-control" placeholder="Ulica">
+            <span asp-validation-for="Ulica" class="text-danger"></span>
+        </div>
+        <div class="form-group ">
+            <input asp-for="PostanskiBroj" class="form-control" placeholder="Postanski broj">
+            <span asp-validation-for="PostanskiBroj" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" id="btnSubmit" class="btn d-block mx-auto btn-primary">Naruci</button>
+            </div>
+        </div>
+
+    </div>
+
+</form>

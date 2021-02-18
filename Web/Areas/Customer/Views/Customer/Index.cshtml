@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Web.Areas.Customer.ViewModels.IndexViewModel
+@{ }
+
+<div class="row">
+
+    <div class="col-lg-3 rounded">
+
+        <div class="list-group">
+            <form asp-area="Customer" asp-controller="Customer" asp-action="Index" method="get" id="sortingForm">
+                <!-- Input and Submit elements -->
+                <br />
+                <select asp-for="ProizvodjacId" asp-items="Model.Proizvodjaci" class="form-control">
+                    <option value="">Odaberite proizvodjaca</option>
+                </select>
+                <br />
+                <input type="submit" value="Sortiraj" class="btn btn-primary btn-block">
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-9">
+        <div class="row">
+
+            @foreach (var artikal in Model.Artikli)
+            {
+<div class="col-lg-4 col-md-6 mb-4">
+
+    <div class="card h-100" style="border-color:palegoldenrod!important">
+        <div class="card-body">
+            <h4 class="card-title">
+               @artikal.Proizvodjac @artikal.Naziv
+            </h4>
+            <h5>@artikal.Cijena KM</h5>}
+            <p class="card-text">@artikal.KratkiOpis</p>
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-primary AddKosarica" artikalId="@artikal.Id">Dodaj <span class="oi oi-basket" title="basket" aria-hidden="true"></span></button>
+        </div>
+    </div>
+
+</div>      }
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.col-lg-9 -->
+
+</div>
+<!-- /.row -->
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+
+
+        $(".AddKosarica").on('click', function (e) {
+
+
+            artikalid = this.getAttribute("artikalId")
+            urldoakcije = "@Url.Action("Dodaj", "Kosarica", new { Area = "Customer" })";
+
+            $.ajax({
+                type: "GET",
+                url: urldoakcije,
+                data: { id: artikalid},
+                dataType: "text",
+                success: function (msg) {
+                    notificationcount = parseInt($("#notification_count").html());
+                    notificationcount += 1;
+                    $("#notification_count").html(notificationcount);
+                    $("#shakeme").effect("bounce");
+                },
+                error: function (req, status, error) {
+
+            }
+    });
+        });
+        });
+
+    </script>
+
+}
+
+
+
